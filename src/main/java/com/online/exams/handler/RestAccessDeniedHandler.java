@@ -22,7 +22,7 @@ public class RestAccessDeniedHandler implements AccessDeniedHandler {
 
     @Override
     public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e) throws IOException, ServletException {
-        JsonResponse<?> jsonResponse = new JsonResponse(403, null, "Access Denied");
+        JsonResponse<?> jsonResponse = new JsonResponse<>(403, null, "Access Denied");
         OutputStream out = httpServletResponse.getOutputStream();
         ObjectMapper mapper = new ObjectMapper();
         mapper.writeValue(out, jsonResponse);

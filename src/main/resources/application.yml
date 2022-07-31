@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/myapp
+    username: root
+    password: admin
+  jpa:
+    hibernate.ddl-auto: update
+    properties.hibernate:
+      jdbc.lob.non_contextual_creation: true
+      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+  jackson:
+    time-zone: "Asia/Jakarta"
+    serialization.indent-output: true
+
+swagger.enabled: true

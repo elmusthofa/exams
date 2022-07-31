@@ -2,13 +2,18 @@ package com.online.exams.config;
 
 import com.google.common.base.Predicates;
 import com.online.exams.exception.Constant;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.service.*;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.ApiKey;
+import springfox.documentation.service.AuthorizationScope;
+import springfox.documentation.service.Contact;
+import springfox.documentation.service.SecurityReference;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
@@ -18,12 +23,12 @@ import java.util.Collections;
 
 @Configuration
 @EnableSwagger2
-@Profile({"development"})
 public class SwaggerConfig extends WebMvcConfigurationSupport {
 
     @Bean
-    public Docket restApi() {
+    public Docket restApi(@Value("${swagger.enabled:false}") Boolean enabled) {
         return new Docket(DocumentationType.SWAGGER_2)
+                .enable(enabled)
                 .groupName("api-user")
                 .apiInfo(apiInfo())
                 .securityContexts(Collections.singletonList(securityContext()))
@@ -49,20 +54,12 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
                 .build();
     }
 
-//    @Bean
-//    public Docket productApi() {
-//        return new Docket(DocumentationType.SWAGGER_2)
-//                .select().apis(RequestHandlerSelectors.basePackage("com.online.exams.controller"))
-//                .build()
-//                .apiInfo(apiInfo());
-//    }
-
-//    @Override
-//    protected void addResourceHandlers(ResourceHandlerRegistry registry) {
-//        registry.addResourceHandler("swagger-ui.html")
-//                .addResourceLocations("classpath:/META-INF/resources/");
-//        registry.addResourceHandler("/webjars/**")
-//                .addResourceLocations("classpath:/META-INF/resources/webjars/");
-//    }
+    @Override
+    protected void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("swagger-ui.html")
+                .addResourceLocations("classpath:/META-INF/resources/");
+        registry.addResourceHandler("/webjars/**")
+                .addResourceLocations("classpath:/META-INF/resources/webjars/");
+    }
 
 }

@@ -6,11 +6,7 @@ import com.online.exams.repository.UserRepository;
 import com.online.exams.request.UserRequest;
 import com.online.exams.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

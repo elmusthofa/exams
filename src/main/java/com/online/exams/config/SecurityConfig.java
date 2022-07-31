@@ -24,6 +24,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtFilter jwtFilter;
 
+    private final String[] SWAGGER_RESOURCES = {"/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**"};
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -35,13 +37,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/auth/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/auth/**").permitAll()
-                .antMatchers("/v2/api-docs", // swagger resources
-                        "/swagger-resources/**",
-                        "/swagger-ui.html",
-                        "/webjars/**").permitAll()
-                .anyRequest().authenticated();
-//                .and()
-//                .exceptionHandling().accessDeniedHandler(accessDeniedHandler());
+                .antMatchers(SWAGGER_RESOURCES).permitAll()
+                .anyRequest().authenticated()
+                .and().exceptionHandling().accessDeniedHandler(accessDeniedHandler());
         http.addFilterAfter(jwtFilter, BasicAuthenticationFilter.class);
     }
 
