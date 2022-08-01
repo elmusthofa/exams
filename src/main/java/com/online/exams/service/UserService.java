@@ -1,6 +1,11 @@
 package com.online.exams.service;
 
+import com.online.exams.entity.User;
 import com.online.exams.request.UserRequest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 public interface UserService {
 
@@ -15,4 +20,8 @@ public interface UserService {
 //    void delete(String id);
 
     void add(UserRequest request);
+
+    List<User> findAll();
+
+    Page<User> findAllPage(Pageable pageable);
 }

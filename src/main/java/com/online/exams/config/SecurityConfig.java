@@ -24,7 +24,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtFilter jwtFilter;
 
-    private final String[] SWAGGER_RESOURCES = {"/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**"};
+//    private final String[] SWAGGER_RESOURCES = {"/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**"};
+
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http
+//                .cors()
+//                .and().csrf().disable()
+//                .sessionManagement()
+//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
+//                .authorizeRequests()
+//                .antMatchers(HttpMethod.POST, "/auth/**").permitAll()
+//                .antMatchers(HttpMethod.GET, "/auth/**").permitAll()
+//                .antMatchers(SWAGGER_RESOURCES).permitAll()
+//                .anyRequest().authenticated()
+//                .and().exceptionHandling().accessDeniedHandler(accessDeniedHandler());
+//        http.addFilterAfter(jwtFilter, BasicAuthenticationFilter.class);
+//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -36,10 +53,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/auth/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/auth/**").permitAll()
-                .antMatchers(SWAGGER_RESOURCES).permitAll()
+                .antMatchers("/v2/api-docs", // swagger resources
+                        "/swagger-resources/**",
+                        "/swagger-ui.html",
+                        "/webjars/**", "/error").permitAll()
                 .anyRequest().authenticated()
-                .and().exceptionHandling().accessDeniedHandler(accessDeniedHandler());
+                .and()
+                .exceptionHandling().accessDeniedHandler(accessDeniedHandler());
         http.addFilterAfter(jwtFilter, BasicAuthenticationFilter.class);
     }
 

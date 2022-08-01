@@ -6,7 +6,12 @@ import com.online.exams.repository.UserRepository;
 import com.online.exams.request.UserRequest;
 import com.online.exams.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +24,16 @@ public class UserServiceImpl implements UserService {
     public void add(UserRequest request) {
         User entity = userMapper.fromRequest(request);
         userRepository.save(entity);
+    }
+
+    @Override
+    public List<User> findAll() {
+        return(List<User>) userRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
+    }
+
+    @Override
+    public Page<User> findAllPage(Pageable pageable) {
+        return userRepository.findAll(pageable);
     }
 
 

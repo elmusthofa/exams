@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -25,7 +26,6 @@ import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -44,10 +44,9 @@ public class UserController {
             @ApiImplicitParam(name = "sort", paramType = "query", defaultValue = "createdDate,desc", dataType = "string"),
     })
     public ResponseEntity<?> findAll(@ApiParam(hidden = true) @ApiIgnore
-                                     @PageableDefault(direction = Sort.Direction.DESC, sort = "createdDate") Pageable pageable,
-                                     @RequestParam(required = false) String param,
-                                     @RequestParam(required = false) String filter) {
-        List<User> userList = new ArrayList<>();
+                                    @PageableDefault(direction = Sort.Direction.DESC, sort = "createdDate") Pageable pageable) {
+        Page<User> userList = userService.findAllPage(pageable);
+//        List<User> userList = userService.findAll();
         return ResponseEntity.ok(JsonResponse.ok(userList));
     }
 
