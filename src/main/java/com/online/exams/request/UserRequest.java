@@ -1,6 +1,7 @@
 package com.online.exams.request;
 
 import com.online.exams.entity.Role;
+import com.online.exams.entity.RoomClass;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,4 +16,5 @@ public class UserRequest {
     private String hp;
     private Role role;
     private Boolean active;
+    private RoomClass roomClass;
 }

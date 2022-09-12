@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository extends PagingAndSortingRepository<User, String>, JpaSpecificationExecutor<User> {
 
     User findByUsernameOrEmail(String username, String email);
+
+//    Page<User> findAll(Pageable pageable);
 }

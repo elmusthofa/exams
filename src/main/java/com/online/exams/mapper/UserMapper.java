@@ -32,6 +32,7 @@ public class UserMapper implements BaseMapper<User, UserDto> {
                 .hp(entity.getHp())
                 .role(entity.getRole())
                 .active(entity.getActive())
+                .roomClass(entity.getRoomClass())
                 .build();
     }
 
@@ -54,6 +55,7 @@ public class UserMapper implements BaseMapper<User, UserDto> {
                 .hp(request.getHp())
                 .role(request.getRole())
                 .active(request.getActive())
+                .roomClass(request.getRoomClass())
                 .build();
     }
 }
